@@ -11,6 +11,9 @@ import Login from "@/components/Login";
 import Register from "@/components/Register";
 import UserPage from "@/components/UserPage";
 import store from "@/components/store";
+import axios from "axios"
+
+
 
 
 Vue.use(VueRouter)
