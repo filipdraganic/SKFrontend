@@ -31,27 +31,19 @@
         methods:{
             register: function(){
                 console.log("AAAAAAAA")
-                var promenjiva = (async () => {
-                    var drugapromenjiva;
-                    drugapromenjiva = await korisnickiServis.getKorisnik(this.email,this.password);
-                    console.log("GET KORISNICI U REGISTER = " + drugapromenjiva)
-                    if(drugapromenjiva == -1) return 0;
+                    var promenjiva = (async () => {
+                        var drugapromenjiva;
+                        drugapromenjiva = await korisnickiServis.postKorisnik(this.name,this.email,this.password);
+                        console.log(drugapromenjiva)
+                        if(drugapromenjiva == 0) return 0;
 
-                    // var promenjiva = (async () => {
-                    //     var drugapromenjiva;
-                    //     drugapromenjiva = await korisnickiServis.postKorisnik(this.name,this.email,this.password);
-                    //     console.log(drugapromenjiva)
-                    //     if(drugapromenjiva == 0) return 0;
-                    //
-                    //     this.$router.push({name:"login"})
-                    //
-                    //     return drugapromenjiva;
-                    // })();
-                    //
-                    // this.$router.push({name:"login"})
+                        this.$router.push({name:"login"})
 
-                    return drugapromenjiva;
-                })();
+                        return drugapromenjiva;
+                    })();
+
+
+
 
             },
 

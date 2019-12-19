@@ -7,24 +7,22 @@
                 <div class="profile-sidebar">
                     <!-- SIDEBAR USERPIC -->
                     <div class="profile-userpic">
-                        <img src="http://keenthemes.com/preview/metronic/theme/assets/admin/pages/media/profile/profile_user.jpg" class="img-responsive" alt="">
+                        <img src="https://elysator.com/wp-content/uploads/blank-profile-picture-973460_1280-e1523978675847.png" class="img-responsive" alt="">
                     </div>
                     <!-- END SIDEBAR USERPIC -->
                     <!-- SIDEBAR USER TITLE -->
                     <div class="profile-usertitle">
                         <div class="profile-usertitle-name">
                             {{this.$store.state.trenutniuser}}
-                            AAAAAAAAAAAAAAAAAA
                         </div>
                         <div class="profile-usertitle-job">
-                            AAAAAAAAAAAAAAAAAAa
+
                         </div>
                     </div>
                     <!-- END SIDEBAR USER TITLE -->
                     <!-- SIDEBAR BUTTONS -->
                     <div class="profile-userbuttons">
                         <button type="button" class="btn btn-success btn-sm">Follow</button>
-                        <button type="button" class="btn btn-danger btn-sm">Message</button>
                     </div>
                     <!-- END SIDEBAR BUTTONS -->
                     <!-- SIDEBAR MENU -->
@@ -57,7 +55,32 @@
             </div>
             <div class="col-md-9">
                 <div class="profile-content">
-                    Some user related content goes here...
+                    <mdb-list-group >
+                        <mdb-list-group-item href="#" :action="true" :active="this.boolean" id="prvi"  onclick="this.promeniboju" class="flex-column align-items-start">
+                            <div class="d-flex w-100 justify-content-between" >
+                                <h5 class="mb-1">List group item heading</h5>
+                                <small>3 days ago</small>
+                            </div>
+                            <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
+                            <small>Donec id elit non mi porta.</small>
+                        </mdb-list-group-item>
+                        <mdb-list-group-item href="#" :action="true" :active="false" class="flex-column align-items-start">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h5 class="mb-1">List group item heading</h5>
+                                <small class="text-muted">3 days ago</small>
+                            </div>
+                            <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
+                            <small class="text-muted">Donec id elit non mi porta.</small>
+                        </mdb-list-group-item>
+                        <mdb-list-group-item href="#" :action="true" class="flex-column align-items-start">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h5 class="mb-1">List group item heading</h5>
+                                <small class="text-muted">3 days ago</small>
+                            </div>
+                            <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
+                            <small class="text-muted">Donec id elit non mi porta.</small>
+                        </mdb-list-group-item>
+                    </mdb-list-group>
                 </div>
             </div>
         </div>
@@ -65,10 +88,45 @@
 </template>
 
 <script>
+    import { mdbListGroup, mdbListGroupItem } from 'mdbvue';
+    import $ from 'jquery'
+    import 'jquery'
     export default {
+
         name: "UserPage",
         created(){
             console.log("iz Userpage = " + this.$store.state.trenutniuser)
+        },
+        data(){
+            return{
+                boolean:'true'
+            }
+
+        },
+        components: {
+            mdbListGroup,
+            mdbListGroupItem
+        },
+        methods:{
+            promeniboju : function(){
+                console.log("promeniBoju")
+                // document.getElementsByTagName("prvi").setAttribute(":active", "true");
+
+            }
+        },
+        mounted(){
+            $(document).ready(function() {
+                $('.mdb-list-group-item').on('click', function() {
+                    var $this = $(this);
+                    var $alias = $this.data('alias');
+
+                    $('.active').removeClass('active');
+                    $this.toggleClass('active')
+                    console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAa")
+                    // Pass clicked link element to another function
+                    // myfunction($this, $alias)
+                })
+            });
         }
     }
 </script>

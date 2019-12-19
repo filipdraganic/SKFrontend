@@ -20,13 +20,32 @@ class korisckiServis {
 
             return err;
         }
+    }
+
+    async getKorisnik(email){
+        try{
+            const res = await axios.get(url,{
+                email
+            })
+
+
+            return res.data;
+
+        }catch (err) {
+            console.log('error u getKorisnik')
+
+        }
 
     }
 
+
+
+
     async getKorisnik(email,password){
         try{
-            const res = await axios.get(url+'login',{
-                email,password
+            let name = "ime"
+            const res = await axios.post(url+'login',{
+                name,email,password
             })
 
 

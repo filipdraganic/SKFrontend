@@ -23,8 +23,8 @@
         name: "Login",
         data(){
             return{
-                email:"",
-                password:""
+                email:"asdf",
+                password:"asdf"
 
             }
         },
@@ -40,10 +40,16 @@
              idiDalje: function(){
 
                 var promenjiva = (async () => {
-                    var drugapromenjiva;
-                    drugapromenjiva = await korisnickiServis.getKorisnici();
+                    let drugapromenjiva;
+                    drugapromenjiva = await korisnickiServis.getKorisnik(this.email,this.password);
 
-                    console.log(drugapromenjiva);
+                    console.log("Druga promenjiva =  " + drugapromenjiva);
+                    if(drugapromenjiva==1){
+                        this.$store.commit('updatedComp', this.email)
+                        console.log("Username = "+this.$store.getters.trenutniuser)
+
+                        this.$router.push({name: 'userpage'})
+                    }
                     return drugapromenjiva;
                 })();
                 //  korisnickiServis.getKorisnik().then(result =>{
@@ -54,9 +60,7 @@
 
                 console.log("promenjiva = " + promenjiva);
 
-                this.$store.commit('updatedComp', this.username)
-                this.$router.push({name: 'userpage'})
-                console.log(this.$store.getters.trenutniuser)
+
             }
 
         }
