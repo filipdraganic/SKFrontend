@@ -1,6 +1,6 @@
 <template>
     <div id="root" class="container">
-        <form>
+
             <p class="h4 text-center mb-4">Sign in</p>
             <div class="grey-text">
                 <mdb-input label="Your email" icon="envelope" type="email" v-model="email"/>
@@ -9,7 +9,7 @@
             <div class="text-center">
                 <mdb-btn v-on:click="idiDalje">Login</mdb-btn>
             </div>
-        </form>
+
         <mdb-btn v-on:click="idiNaRegister">Register</mdb-btn>
 
 
@@ -23,8 +23,8 @@
         name: "Login",
         data(){
             return{
-                email:"asdf",
-                password:"asdf"
+                email:"petar@gmail.com",
+                password:"petar"
 
             }
         },
@@ -44,12 +44,13 @@
                     drugapromenjiva = await korisnickiServis.getKorisnik(this.email,this.password);
 
                     console.log("Druga promenjiva =  " + drugapromenjiva);
-                    if(drugapromenjiva==1){
+                    if(drugapromenjiva===1){
                         this.$store.commit('updatedComp', this.email)
                         console.log("Username = "+this.$store.getters.trenutniuser)
 
-                        this.$router.push({name: 'userpage'})
-                    }
+                        await this.$router.push({name: 'userpage'})
+
+                    }else alert("Logovanje nije uspesno , netacan username ili password")
                     return drugapromenjiva;
                 })();
                 //  korisnickiServis.getKorisnik().then(result =>{

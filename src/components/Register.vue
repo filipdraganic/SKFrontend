@@ -1,6 +1,6 @@
 <template>
     <div class="container" id="root">
-<!--        <form>-->
+
             <p class="h4 text-center mb-4">Sign up</p>
             <div class="grey-text">
                 <mdb-input label="Your name" icon="user" type="text" v-model="name"/>
@@ -10,7 +10,6 @@
             <div class="text-center">
                 <mdb-btn color="primary" v-on:click="register">Register</mdb-btn>
             </div>
-<!--        </form>-->
         <mdb-btn v-on:click="idiDalje">Login</mdb-btn>
 
     </div>
@@ -35,7 +34,15 @@
                         var drugapromenjiva;
                         drugapromenjiva = await korisnickiServis.postKorisnik(this.name,this.email,this.password);
                         console.log(drugapromenjiva)
-                        if(drugapromenjiva == 0) return 0;
+                        if(drugapromenjiva === -1) {
+                            alert("Korisnik vec postoji ")
+                            return 0;
+                        }
+
+                        if(drugapromenjiva === 0){
+                            alert("Neka polja su prazna")
+                            return 0;
+                        }
 
                         this.$router.push({name:"login"})
 

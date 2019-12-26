@@ -85,7 +85,7 @@
                     <div class="list-group" id='listGroup'>
                         <a  class="list-group-item flex-column align-items-start" v-bind:class="{ 'active' : boolprvi }" v-on:click="isSelected(boolprvi) ">
                             <div class="d-flex w-100 justify-content-between">
-                                <h5 class="mb-1">List group item heading</h5>
+                                <h5 class="mb-1">Vremenska prognoza</h5>
                             </div>
                             <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
                             <br>
@@ -110,7 +110,7 @@
 
                         <a  class="list-group-item flex-column align-items-start" v-bind:class="{ 'active' : this.booldrugi  }" v-on:click="isSelected1(booldrugi)">
                             <div class="d-flex w-100 justify-content-between">
-                                <h5 class="mb-1">List group item heading</h5>
+                                <h5 class="mb-1">Pracenje akcija</h5>
                             </div>
                             <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
                             <br>
@@ -134,7 +134,7 @@
 
                         <a  class="list-group-item flex-column align-items-start" v-bind:class="{ 'active' : this.booltreci  }" v-on:click="isSelected2(booltreci)">
                             <div class="d-flex w-100 justify-content-between">
-                                <h5 class="mb-1">List group item heading</h5>
+                                <h5 class="mb-1">XKCD meme</h5>
                             </div>
                             <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
                             <br>
@@ -165,15 +165,27 @@
 </template>
 
 <script>
-    import { mdbListGroup, mdbListGroupItem } from 'mdbvue';
+    import {mdbListGroup, mdbListGroupItem} from 'mdbvue';
     import $ from 'jquery'
     import 'jquery'
+    import korisnickiServis from "../axiosRoutes/korisnickiServis";
 
     export default {
 
         name: "UserPage",
-        created(){
-            console.log("iz Userpage = " + this.$store.state.trenutniuser)
+        email:"null",
+        mapa:"",
+        async created(){
+            console.log("iz Userpage = " + this.$store.state.trenutniuser);
+            this.email = this.$store.state.trenutniuser;
+
+            await this.getSubs()
+
+            console.log("mapa")
+            console.log(this.mapa)
+
+            this.setSelectedPolja()
+
         },
         data(){
             return{
@@ -189,15 +201,66 @@
             mdbListGroupItem
         },
         methods:{
+
+            getSubs: async function(){
+               let promenjiva = await (async () => {
+                    let drugapromenjiva;
+                    drugapromenjiva = await korisnickiServis.getSubscription(this.email)
+                    //console.log("Druga promenjiva =  " + drugapromenjiva);
+                    return drugapromenjiva;
+                })();
+                // console.log(promenjiva)
+                this.mapa = promenjiva
+
+            },
+
+            setSelectedPolja: function(){
+
+                if (this.mapa["Vremenska prognoza"] === 1){
+                    this.boolprvi = true
+                }
+
+                if (this.mapa["Pracenje akcija"] === 1){
+                    this.booldrugi = true
+                }
+
+                if (this.mapa["XKCD meme"] === 1){
+                    this.booltreci = true
+                }
+
+
+            },
+
             isSelected: function(i){
                 //send http request to toggle subscription on service
+                var promenjiva = (async () => {
+                    let drugapromenjiva;
+                    drugapromenjiva = await korisnickiServis.patchKorisnik(this.$store.getters.trenutniuser, "Vremenska prognoza");
+
+                    console.log("Druga promenjiva =  " + drugapromenjiva);
+                    return drugapromenjiva;
+                })();
                 return this.boolprvi  = !i;
 
             },
             isSelected1: function(i){
+                var promenjiva = (async () => {
+                    let drugapromenjiva;
+                    drugapromenjiva = await korisnickiServis.patchKorisnik(this.$store.getters.trenutniuser, "Pracenje akcija");
+
+                    console.log("Druga promenjiva =  " + drugapromenjiva);
+                    return drugapromenjiva;
+                })();
                 return this.booldrugi  = !i;
 
             },isSelected2: function(i){
+                var promenjiva = (async () => {
+                    let drugapromenjiva;
+                    drugapromenjiva = await korisnickiServis.patchKorisnik(this.$store.getters.trenutniuser, "XKCD meme");
+
+                    console.log("Druga promenjiva =  " + drugapromenjiva);
+                    return drugapromenjiva;
+                })();
                 return this.booltreci  = !i;
 
             },
