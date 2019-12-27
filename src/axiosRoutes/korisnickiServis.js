@@ -62,11 +62,11 @@ class korisckiServis {
     }
 
 
-    async patchKorisnik(email, brojServisa){
+    async patchKorisnik(email, imeServisa){ //Ovo patchuje da li je subscribovan na neki mikroservis ili ne
 
         try{
             const res = await axios.patch(url+'subscribe', {
-                email, brojServisa
+                email, imeServisa
             });
 
             console.log("Vraca iz patch korisnik")
@@ -74,6 +74,21 @@ class korisckiServis {
 
         }catch (e) {
             console.log('error u patchKorisnik');
+        }
+    }
+
+    async patchKorisnikSubscriptions(email, imeServisa, podesavanje){ // Ovo patchuje na koje je podesavanje mikroservisa subscribovan
+
+        try{
+            const res = await axios.patch(url+'subscribeSettings', {
+                email, imeServisa, podesavanje
+            });
+
+            console.log("Vraca iz patch korisnikSubscriptions")
+            return res.data;
+
+        }catch (e) {
+            console.log('error u patchKorisnikSubscriptions');
         }
     }
 
