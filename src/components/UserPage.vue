@@ -92,43 +92,18 @@
                         </a>
                             <div class="containerZaRadioInput">
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio111" value="option1">
-                                    <label class="form-check-label" for="inlineRadio111">1</label>
+                                    <input class="form-check-input" type="radio" name="inlineRadioOptions"  :checked = this.boolPrviPrvaGrupa id="inlineRadio111" v-on:click="isRadioButtonSelected(1)" value="option1">
+                                    <label class="form-check-label" for="inlineRadio111">10 minuta</label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio222" value="option2">
-                                    <label class="form-check-label" for="inlineRadio222">2</label>
+                                    <input class="form-check-input" type="radio" name="inlineRadioOptions" :checked = this.boolDrugiPrvaGrupa id="inlineRadio222" v-on:click="isRadioButtonSelected(2)" value="option2">
+                                    <label class="form-check-label" for="inlineRadio222">30 minuta</label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio333" value="option3">
-                                    <label class="form-check-label" for="inlineRadio333">3 </label>
+                                    <input class="form-check-input" type="radio" name="inlineRadioOptions" :checked = this.boolTreciPrvaGrupa id="inlineRadio333" v-on:click="isRadioButtonSelected(3)" value="option3">
+                                    <label class="form-check-label" for="inlineRadio333">Sat vremena</label>
                                 </div>
                             </div>
-
-
-
-
-                        <a  class="list-group-item flex-column align-items-start" v-bind:class="{ 'active' : this.booldrugi  }" v-on:click="isSelected1(booldrugi)">
-                            <div class="d-flex w-100 justify-content-between">
-                                <h5 class="mb-1">Pracenje akcija</h5>
-                            </div>
-                            <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-                            <br>
-                        </a>
-                        <div class="containerZaRadioInput">
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="inlineRadioOptions2" id="inlineRadio11" value="option1">
-                                <label class="form-check-label" for="inlineRadio11">1</label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="inlineRadioOptions2" id="inlineRadio22" value="option2">
-                                <label class="form-check-label" for="inlineRadio22">2</label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="inlineRadioOptions2" id="inlineRadio33" value="option3">
-                                <label class="form-check-label" for="inlineRadio33">3 </label>
-                            </div>
-                        </div>
 
 
 
@@ -141,16 +116,16 @@
                         </a>
                         <div class="containerZaRadioInput">
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="inlineRadioOptions3" id="inlineRadio1" value="option1">
-                                <label class="form-check-label" for="inlineRadio1">1</label>
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions3" :checked = this.boolPrviDrugaGrupa id="inlineRadio1" v-on:click="isRadioButtonSelected2(1)" value="option1">
+                                <label class="form-check-label" for="inlineRadio1">10 minuta</label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="inlineRadioOptions3" id="inlineRadio2" value="option2">
-                                <label class="form-check-label" for="inlineRadio2">2</label>
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions3" :checked = this.boolDrugiDrugaGrupa id="inlineRadio2" v-on:click="isRadioButtonSelected2(2)" value="option2">
+                                <label class="form-check-label" for="inlineRadio2">30 minuta</label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="inlineRadioOptions3" id="inlineRadio3" value="option3">
-                                <label class="form-check-label" for="inlineRadio3">3 </label>
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions3" :checked = this.boolTreciDrugaGrupa id="inlineRadio3" v-on:click="isRadioButtonSelected2(3)" value="option3">
+                                <label class="form-check-label" for="inlineRadio3">Sat vremena</label>
                             </div>
                         </div>
                     </div>
@@ -191,8 +166,17 @@
             return{
                 boolean:'true',
                 boolprvi:false,
-                booldrugi:false,
-                booltreci:false
+                booltreci:false,
+                boolPrvaGrupa: 1,
+                boolDrugaGrupa: 2,
+
+                boolPrviPrvaGrupa: false,
+                boolDrugiPrvaGrupa: false,
+                boolTreciPrvaGrupa: false,
+
+                boolPrviDrugaGrupa: false,
+                boolDrugiDrugaGrupa: false,
+                boolTreciDrugaGrupa: false,
             }
 
         },
@@ -216,17 +200,58 @@
 
             setSelectedPolja: function(){
 
-                if (this.mapa["Vremenska prognoza"] === 1){
-                    this.boolprvi = true
+
+
+                    let varijabla = this.mapa["Vremenska prognoza"];
+
+                    if (varijabla === 1){
+
+                        this.boolPrviPrvaGrupa = true;
+                        this.boolDrugiPrvaGrupa = false;
+                        this.boolTreciPrvaGrupa = false;
+
+                    }
+                    else if (varijabla === 2){
+                        this.boolPrviPrvaGrupa = false;
+                        this.boolDrugiPrvaGrupa = true;
+                        this.boolTreciPrvaGrupa = false;
+                    }
+                    else if (varijabla === 3){
+                        this.boolPrviPrvaGrupa = false;
+                        this.boolDrugiPrvaGrupa = false;
+                        this.boolTreciPrvaGrupa = true;
+                    }
+
+                if (varijabla > 0){
+
+                    this.boolprvi = true;
+
                 }
 
-                if (this.mapa["Pracenje akcija"] === 1){
-                    this.booldrugi = true
-                }
 
-                if (this.mapa["XKCD meme"] === 1){
+                    let varijabladruga = this.mapa["XKCD meme"];
+
+                    if(varijabladruga === 1 || varijabladruga === -1){
+                        this.boolPrviDrugaGrupa = true;
+                        this.boolDrugiDrugaGrupa = false;
+                        this.boolTreciDrugaGrupa = false;
+                    }
+                    else if(varijabladruga === 2 || varijabladruga === -2){
+                        this.boolPrviDrugaGrupa = false;
+                        this.boolDrugiDrugaGrupa = true;
+                        this.boolTreciDrugaGrupa = false;
+                    }
+                    else if(varijabladruga === 3 || varijabladruga === -3){
+                        this.boolPrviDrugaGrupa = false;
+                        this.boolDrugiDrugaGrupa = false;
+                        this.boolTreciDrugaGrupa = true;
+                    }
+
+                if (varijabla > 0){
                     this.booltreci = true
+
                 }
+
 
 
             },
@@ -243,17 +268,7 @@
                 return this.boolprvi  = !i;
 
             },
-            isSelected1: function(i){
-                var promenjiva = (async () => {
-                    let drugapromenjiva;
-                    drugapromenjiva = await korisnickiServis.patchKorisnik(this.$store.getters.trenutniuser, "Pracenje akcija");
-
-                    console.log("Druga promenjiva =  " + drugapromenjiva);
-                    return drugapromenjiva;
-                })();
-                return this.booldrugi  = !i;
-
-            },isSelected2: function(i){
+            isSelected2: function(i){
                 var promenjiva = (async () => {
                     let drugapromenjiva;
                     drugapromenjiva = await korisnickiServis.patchKorisnik(this.$store.getters.trenutniuser, "XKCD meme");
@@ -265,8 +280,32 @@
 
             },
 
+            isRadioButtonSelected:function(i){
+                var promenjiva = (async () => {
+                    let drugapromenjiva;
+                    drugapromenjiva = await korisnickiServis.patchKorisnikSubscriptions(this.$store.getters.trenutniuser, "Vremenska prognoza", i);
+
+                    console.log("Druga promenjiva =  " + drugapromenjiva);
+                    return drugapromenjiva;
+                })();
+
+            },
+
+            isRadioButtonSelected2:function(i){
+                var promenjiva = (async () => {
+                    let drugapromenjiva;
+                    drugapromenjiva = await korisnickiServis.patchKorisnikSubscriptions(this.$store.getters.trenutniuser, "XKCD meme", i);
+
+                    console.log("Druga promenjiva =  " + drugapromenjiva);
+                    return drugapromenjiva;
+                })();
+
+            },
+
+
+
             promeniboju : function(){
-                console.log("promeniBoju" + this.selected)
+                console.log("promeniBoju" )
                 // document.getElementsByTagName("prvi").setAttribute(":active", "true");
 
             }
