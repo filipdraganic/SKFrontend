@@ -40,8 +40,15 @@
              idiDalje: function(){
 
                 var promenjiva = (async () => {
+                    let tokenpromenjiva = await korisnickiServis.authenticateKorisnik(this.email,this.password);
+
+                    let token = tokenpromenjiva["token"];
+                    //console.log("token je = " + token);
+                    this.$store.commit('setToken', token);
+                    console.log("token iz store je je =  " + this.$store.getters.token);
+
                     let drugapromenjiva;
-                    drugapromenjiva = await korisnickiServis.getKorisnik(this.email,this.password);
+                    drugapromenjiva = await korisnickiServis.loginKorisnik(this.email,this.password,token);
 
                     console.log("Druga promenjiva =  " + drugapromenjiva);
                     if(drugapromenjiva===1){
