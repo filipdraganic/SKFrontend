@@ -189,7 +189,8 @@
             getSubs: async function(){
                let promenjiva = await (async () => {
                     let drugapromenjiva;
-                    drugapromenjiva = await korisnickiServis.getSubscription(this.email)
+                    let token = this.$store.getters.token
+                    drugapromenjiva = await korisnickiServis.getSubscription(this.email,token)
                     //console.log("Druga promenjiva =  " + drugapromenjiva);
                     return drugapromenjiva;
                 })();
@@ -204,19 +205,19 @@
 
                     let varijabla = this.mapa["Vremenska prognoza"];
 
-                    if (varijabla === 1){
+                    if (varijabla === 1 || varijabla === -1){
 
                         this.boolPrviPrvaGrupa = true;
                         this.boolDrugiPrvaGrupa = false;
                         this.boolTreciPrvaGrupa = false;
 
                     }
-                    else if (varijabla === 2){
+                    else if (varijabla === 2 || varijabla === -2){
                         this.boolPrviPrvaGrupa = false;
                         this.boolDrugiPrvaGrupa = true;
                         this.boolTreciPrvaGrupa = false;
                     }
-                    else if (varijabla === 3){
+                    else if (varijabla === 3 || varijabla === -3){
                         this.boolPrviPrvaGrupa = false;
                         this.boolDrugiPrvaGrupa = false;
                         this.boolTreciPrvaGrupa = true;
@@ -247,7 +248,7 @@
                         this.boolTreciDrugaGrupa = true;
                     }
 
-                if (varijabla > 0){
+                if (varijabladruga > 0){
                     this.booltreci = true
 
                 }
@@ -260,7 +261,8 @@
                 //send http request to toggle subscription on service
                 var promenjiva = (async () => {
                     let drugapromenjiva;
-                    drugapromenjiva = await korisnickiServis.patchKorisnik(this.$store.getters.trenutniuser, "Vremenska prognoza");
+                    let token = this.$store.getters.token
+                    drugapromenjiva = await korisnickiServis.patchKorisnik(this.$store.getters.trenutniuser, "Vremenska prognoza", token);
 
                     console.log("Druga promenjiva =  " + drugapromenjiva);
                     return drugapromenjiva;
@@ -271,7 +273,8 @@
             isSelected2: function(i){
                 var promenjiva = (async () => {
                     let drugapromenjiva;
-                    drugapromenjiva = await korisnickiServis.patchKorisnik(this.$store.getters.trenutniuser, "XKCD meme");
+                    let token = this.$store.getters.token
+                    drugapromenjiva = await korisnickiServis.patchKorisnik(this.$store.getters.trenutniuser, "XKCD meme",token);
 
                     console.log("Druga promenjiva =  " + drugapromenjiva);
                     return drugapromenjiva;
@@ -283,7 +286,8 @@
             isRadioButtonSelected:function(i){
                 var promenjiva = (async () => {
                     let drugapromenjiva;
-                    drugapromenjiva = await korisnickiServis.patchKorisnikSubscriptions(this.$store.getters.trenutniuser, "Vremenska prognoza", i);
+                    let token = this.$store.getters.token
+                    drugapromenjiva = await korisnickiServis.patchKorisnikSubscriptions(this.$store.getters.trenutniuser, "Vremenska prognoza", i,token);
 
                     console.log("Druga promenjiva =  " + drugapromenjiva);
                     return drugapromenjiva;
@@ -294,7 +298,8 @@
             isRadioButtonSelected2:function(i){
                 var promenjiva = (async () => {
                     let drugapromenjiva;
-                    drugapromenjiva = await korisnickiServis.patchKorisnikSubscriptions(this.$store.getters.trenutniuser, "XKCD meme", i);
+                    let token = this.$store.getters.token
+                    drugapromenjiva = await korisnickiServis.patchKorisnikSubscriptions(this.$store.getters.trenutniuser, "XKCD meme", i,token);
 
                     console.log("Druga promenjiva =  " + drugapromenjiva);
                     return drugapromenjiva;

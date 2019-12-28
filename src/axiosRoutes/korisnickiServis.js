@@ -45,6 +45,7 @@ class korisckiServis {
     async authenticateKorisnik(username,password){
 
         try{
+
             const res = await  axios.post(url+'authenticate',{
                 username,password
             })
@@ -64,7 +65,6 @@ class korisckiServis {
         try{
             let name = "ime"
             const ceotoken = "Bearer " + token
-            axios.defaults.headers.common['Authorization'] = "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwZXRhckBnbWFpbC5jb20iLCJleHAiOjE1Nzc1MTcwOTcsImlhdCI6MTU3NzQ5OTA5N30.W6bv3z3HpMGM76VDu_5yn-NQSa2WJYW8nkMgE26J2Uqv6sC0NKMQCQPrO1RCj7yLGbEzWiPgaSHoC8kOpyO9eA"
 
             console.log("u login korisnik, token je = " + ceotoken)
             // const res = await axios.post(url+'login', {
@@ -78,11 +78,13 @@ class korisckiServis {
             // },{
             //     name,email,password
             // })
-
-            const res = await axios.post(
-                 url + 'login'
-
-            );
+            //
+            const res = await axios({
+                method:'post',
+                url:url+"login",
+                headers: {'Authorization': ceotoken},
+                data:{name,email,password}
+                });
 
 
             console.log("vraca iz login korisnik");
@@ -97,16 +99,27 @@ class korisckiServis {
     }
 
 
-    async patchKorisnik(email, brojServisa, token){
+    async patchKorisnik(email, imeServisa, token){
 
         try{
-            const res = await axios.patch(url+'subscribe', {
-                email, brojServisa
-            }, {
-                headers: {
-                    'Authorization': "Bearer " + token
-                }
+            const ceotoken = "Bearer " + token
+
+            let username = email;
+            const res = await axios({
+                method:'patch',
+                url:url+"subscribe",
+                headers: {'Authorization': ceotoken},
+                data:{email, username, imeServisa}
+
             });
+
+            // const res = await axios({
+            //     method:'patch',
+            //     url:url+"getSubscriptions",
+            //     headers: {'Authorization': ceotoken},
+            //     params:{id:email},
+            //     data:{email,username}
+            // });
 
             console.log("Vraca iz patch korisnik")
             return res.data;
@@ -116,16 +129,44 @@ class korisckiServis {
         }
     }
 
+    async patchKorisnikSubscriptions(email, imeServisa, podesavanje, token){
+        try{
+            const ceotoken = "Bearer " + token
+
+
+            const res = await axios({
+                method:'patch',
+                url:url+"subscribeSettings",
+                headers: {'Authorization': ceotoken},
+                data:{email, imeServisa, podesavanje}
+            });
+
+
+            console.log("Vraca iz patch korisnik")
+            return res.data;
+
+        }catch (e) {
+            console.log('error u patchKorisnik');
+        }
+
+
+    }
+
 
     async getSubscription(email, token){
         try{
-            const res = await axios.get(url+'getSubscriptions?id='+email, {
+            const ceotoken = "Bearer " + token
 
-            }, {
-                headers: {
-                    'Authorization': "Bearer " + token
-                }
-            })
+            let username = email;
+            const res = await axios({
+                method:'get',
+                url:url+"getSubscriptions",
+                headers: {'Authorization': ceotoken},
+                params:{id:email},
+                data:{email,username}
+            });
+
+
             return res.data;
         }catch (e) {
             console.log("Error u get Subscriptions")
